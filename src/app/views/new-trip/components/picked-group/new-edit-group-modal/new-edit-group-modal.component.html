@@ -1,0 +1,101 @@
+<div class="modal-header ">
+  <h4 class="modal-title pull-left" *ngIf="!selectedGroup.groupId">Add Group</h4>
+  <h4 class="modal-title pull-left" *ngIf="selectedGroup.groupId">Edit Group</h4>
+  <button type="button" class="close pull-right" aria-label="Close" (click)="onCancel()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+<div class="modal-body">
+  <div class="container">
+    <div [hidden]="submitted">
+      <form (ngSubmit)="onSave()" id="ngForm" #groupForm="ngForm">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="groupName">Group name</label>
+              <input type="text" class="form-control" id="groupName" required [(ngModel)]="selectedGroup.groupName"
+                name="groupName" #groupName="ngModel" />
+              <div [hidden]="groupName.valid || groupName.pristine" class="alert alert-danger">
+                UserName is required
+              </div>
+              <div class="text-right">
+                <button *ngIf="!selectedGroup.groupId" type="button" class="btn btn-light"
+                  (click)="onCreate(groupForm)">Create
+                  group</button>
+                <!-- <button *ngIf="roles[0]=='ROLE_USER' || roles[1]=='ROLE_USER' || roles[2]=='ROLE_USER'" type="button"
+                  class="btn btn-light" (click)="onDelete()">Create
+                  group</button> -->
+              </div>
+            </div>
+            <div class="filter-member">
+              <label for="search">Add member</label>
+              <input id="search" type="text" class="col-md-12" [(ngModel)]="userFilter.userName"
+                [ngModelOptions]="{standalone: true}" placeholder=" Type to filter by userName">
+            </div>
+            <div class="members-selection-container">
+              <table class="table table-bordered table-striped table-sm tablescroll ">
+                <colgroup>
+                  <col span="1">
+                </colgroup>
+
+                <tbody>
+                  <tr *ngFor="let user of users | filterBy:userFilter" (click)="RowSelected(user)">
+                    <td> {{user.userName}} </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="text-right">
+              <button type="button" class="btn btn-light" *ngIf="selectedGroup.groupId" (click)="onAdd()">Add</button>
+            </div>
+            <div class="text-right">
+              <button type="button" class="btn btn-light" *ngIf="!selectedGroup.groupId" (click)="onAdd2()">Add
+                2</button>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <label for="table">Members</label>
+            <div class="members-selection-container">
+              <table class="table table-bordered table-striped table-sm tablescroll " id="table">
+                <colgroup>
+                  <col span="1">
+                </colgroup>
+                <thead>
+                  <tr role="row">
+                    <th>Members</th>
+                  </tr>
+                </thead>
+                <tbody class="tabelmembers">
+
+                  <tr *ngFor="let member of members" (click)="RowSelected1(member)">
+                    <td>{{ member.userName}}</td>
+                  </tr>
+
+                </tbody>
+              </table>
+            </div>
+            <div class="text-right">
+              <button type="button" class="btn btn-light" *ngIf="selectedGroup.groupId"
+                (click)="onDelete()">Delete</button>
+            </div>
+            <div class="text-right">
+              <button type="button" class="btn btn-light" *ngIf="!selectedGroup.groupId"
+                (click)="onDelete2()">Delete2</button>
+            </div>
+          </div>
+
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal-footer">
+  <button type="button" class="btn btn-danger" (click)="onCancel()">
+    Cancel
+  </button>
+  <button type="button" class="btn btn-success" (click)="groupForm.ngSubmit.emit()" [disabled]="!groupForm.form.valid">
+    Save
+  </button>
+</div>

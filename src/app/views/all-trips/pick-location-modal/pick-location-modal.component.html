@@ -1,0 +1,111 @@
+<div class="modal-header ">
+  <h4 class="modal-title pull-left">Pick location</h4>
+
+  <button type="button" class="close pull-right" aria-label="Close" (click)="onCancel()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+<div class="modal-body">
+  <div class="container">
+    <div [hidden]="">
+
+
+      <div class="userClass">
+        <div class="row">
+          <div class="col-md-10">
+            <form (ngSubmit)="onSave()" id="ngForm" #choiceForm="ngForm">
+              <div class="form-group">
+                <label for="text">Insert choice</label>
+                <input type="text" class="form-control" id="text" required [(ngModel)]="modelChoice.text" name="text"
+                  #text="ngModel" />
+                <div [hidden]="text.valid || text.pristine" class="alert alert-danger">
+                  text is required
+                </div>
+              </div>
+              <div class="text-right">
+                <button type="button" class="btn btn-light" (click)="onAddChoice(choiceForm)">Add
+                  choice</button>
+              </div>
+            </form>
+
+            <br>
+
+            <table>
+              <thead>
+                <td></td>
+                <td>
+                  <h5>Vote choice</h5>
+                </td>
+              </thead>
+              <br>
+              <tbody>
+                <tr *ngFor="let choice of choices">
+                  <td>
+                    <input type="radio" name="radiogroup" [value]="choice.id" (change)="onSelectionChange(choice)">
+                  </td>
+                  <td>{{ choice.text }}</td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="text-right">
+              <button type="button" class="btn btn-light" (click)="onVote()">Vote
+                choice</button>
+            </div>
+            <div class="voteUser" *ngIf="personalVote">Your vote is: {{personalVote.choice.text}}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <br>
+      <br>
+      <br>
+      <!-- RETAKEN POLL -->
+
+      <div class="retakeVotes" *ngIf="choices2">
+
+        <h4 class="textRetake"> Due to multiple possibilities for the trip location, you have to RETAKE the poll.
+        </h4>
+        <br>
+        <br>
+        <div class="col-md-10 ">
+          <table>
+            <thead>
+              <td></td>
+              <td>
+                <h5>Vote one of the final choices</h5>
+              </td>
+            </thead>
+            <br>
+            <tbody>
+              <tr *ngFor="let choice of choices2">
+                <td>
+                  <input type="radio" name="radiogroup" [value]="choice.id" (change)="onSelectionChangeRetake(choice)">
+                </td>
+                <td>{{ choice.text }}</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="text-right">
+            <button type="button" class="btn btn-light" (click)="onVoteRetake()">Vote
+              choice</button>
+          </div>
+          <br>
+          <div class="voteUser" *ngIf="personalVote2">Your vote is: {{personalVote2.choice.text}}</div>
+        </div>
+      </div>
+
+
+
+
+    </div>
+  </div>
+</div>
+
+<div class="modal-footer">
+  <button type="button" class="btn btn-danger" (click)="onCancel()">
+    Close
+  </button>
+
+</div>

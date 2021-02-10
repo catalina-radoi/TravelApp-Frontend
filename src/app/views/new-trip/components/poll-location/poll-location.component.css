@@ -1,0 +1,36 @@
+.userClass{
+  background-color: rgb(185, 210, 219);
+  padding-top: 50px;
+  padding-left:20px;
+  padding-bottom: 20px;
+}
+
+.voteUser{
+  color: rgb(9, 185, 103);
+}
+
+
+.votesAdmin{
+  padding-left: 70px;
+}
+
+.votesPoll{
+  padding-left: 70px;
+}
+
+.retakeVotes{
+  padding-top: 50px;
+  padding-bottom: 50px;
+  background-color: rgb(241, 178, 167);
+}
+
+.textRetake{
+
+  padding-left:20px;
+}
+
+
+
+.fundal{
+  background-color: rgb(219, 188, 188);
+}

@@ -1,0 +1,36 @@
+.color-text-btn{
+  color: white;
+}
+.content-margin{
+  margin-left: 0px;
+  margin-right: 0px;
+}
+.filter-group{
+  margin-top:5px;
+  margin-bottom: 25px;
+
+}
+.search-group-1{
+  margin-left:15px;
+  margin-right: 0px;
+}
+.search-group-2{
+  margin-left:5px;
+  margin-right: 0px;
+}
+.btn-pick{
+  background-color: rgb(255, 174, 82);
+  color: white;
+}
+.btn-details{
+  background-color: rgb(128, 190, 211);
+  color: white;
+}
+
+
+.group-selection-container > table tbody tr {
+  cursor: pointer;
+}
+.group-selection-container > table tbody tr:hover {
+  background-color: lightgray;
+}

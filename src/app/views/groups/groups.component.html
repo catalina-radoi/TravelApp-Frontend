@@ -1,0 +1,91 @@
+<div class="container-fluid">
+  <div class="animated fadeIn">
+    <div class="card">
+      <div class="card-header ">
+        <div class="col-sm-5">
+          <h4 class="card-title mb-0 ">Groups</h4>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="row filter-group ">
+          <div class="col-md-6">
+            <div class="row">
+              <div class="search-group-1">
+                <i class="fa fa-search"></i>
+              </div>
+              <div class="search-group-2">
+                <input id="search" type="text" class="col-md-12 " [(ngModel)]="groupFilter.groupName"
+                  [ngModelOptions]="{standalone: true}" placeholder="Search group">
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 text-right">
+            <button type="button" class="btn btn-info color-text-btn" (click)="onChange()">New Group</button>
+
+          </div>
+        </div>
+        <div class="row content-margin group-selection-container ">
+
+
+
+          <table id="table1" class="table table-bordered table-striped table-sm ">
+            <colgroup>
+              <col span="1">
+              <col span="1" style=" text-align: center;">
+            </colgroup>
+            <thead>
+              <tr role="row">
+                <th>Group Name</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let group of groups | filterBy:groupFilter">
+                <td> {{group.groupName}} </td>
+                <td class="action-column">
+                  <button type="button" class="btn btn-info color-text-btn" (click)="onDetails(group)">
+                    View Details
+                  </button>
+
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+
+          <h5>Administration</h5>
+          <table class="table table-bordered table-striped table-sm ">
+            <colgroup>
+              <col span="1">
+              <col span="1" style=" text-align: center;">
+            </colgroup>
+            <thead>
+              <tr role="row">
+                <th>Group Name</th>
+
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let groupAdmin of groupsAdmin | filterBy:groupFilter">
+                <td> {{groupAdmin.groupName}} </td>
+
+                <td class="action-column">
+                  <button type="button" class="btn btn-info color-text-btn" (click)="onChange(groupAdmin)">
+                    Edit
+                  </button>
+                  <button type="button" class="btn btn-danger" (click)="onDelete(groupAdmin.groupId)">
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

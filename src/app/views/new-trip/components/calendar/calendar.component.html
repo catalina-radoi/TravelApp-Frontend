@@ -1,0 +1,252 @@
+<div class="animated fadeIn">
+  <div class="card calendar-card">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-sm-5">
+          <h4 class="card-title mb-0">Calendar</h4>
+          Please choose a date between {{this.currentTrip.startInterval}} and {{this.currentTrip.endInterval}}
+        </div>
+      </div>
+      <!--/.row-->
+      <div class="calendar-wrapper">
+        <div class="calendar-container m-2 p-2">
+          <div id='calendar' class="app-calendar" *ngIf="calendarOptions.properties.calendarVisible">
+            <full-calendar #calendar defaultView="dayGridMonth" [header]="{
+        left: 'prev,next today',
+        center: 'title',
+        right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+      }" [plugins]="calendarOptions.properties.calendarPlugins" [firstDay]="calendarOptions.properties.firstDay"
+              [weekends]="calendarOptions.properties.calendarWeekends" [events]="calendarEvents"
+              [validRange]="calendarOptions.properties.validRange" [selectable]="calendarOptions.properties.selectable"
+              (dateClick)="handleDateClick($event)" (select)="handleSelect($event)">
+            </full-calendar>
+          </div>
+          <br>
+          <br>
+
+
+          <div class="row">
+            <div class="col-md-5 ">
+              <table>
+                <thead>
+                  <td></td>
+                  <td>
+                    <h5>Vote choice</h5>
+                  </td>
+                </thead>
+                <br>
+                <tbody>
+                  <tr *ngFor="let choice of choices">
+                    <td>
+                      <input type="radio" name="radiogroup" [value]="choice.id" (change)="onSelectionChange(choice)">
+                    </td>
+                    <td>{{ choice.text }}</td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="text-right">
+                <button type="button" class="btn btn-light" (click)="onVote()">Vote
+                  choice</button>
+              </div>
+              <br>
+              <div class="voteUser" *ngIf="personalVote">Your vote is: {{personalVote.choice.text}}</div>
+            </div>
+
+            <br>
+
+
+            <div class="col-md-5 votesPoll">
+
+              <h4>Votes in this poll</h4>
+              <table id="table1" class="table table-bordered table-striped table-sm ">
+                <colgroup>
+                  <col span="1">
+                  <col span="1" style=" text-align: center;">
+                </colgroup>
+                <thead>
+                  <tr role="row">
+                    <th>User</th>
+                    <th>Choice</th>
+                    <th>Status</th>
+
+
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let vote of votes ">
+                    <td *ngIf="vote.user.userName">{{ vote.user.userName }}</td>
+                    <td *ngIf="!vote.user.userName">Null</td>
+                    <td *ngIf="vote.choice.text">{{ vote.choice.text }}</td>
+                    <td *ngIf="!vote.choice.text">No choice</td>
+                    <td *ngIf="vote.status">{{ vote.status }}</td>
+                    <td *ngIf="!vote.status">Null</td>
+
+                  </tr>
+                </tbody>
+              </table>
+              <div class="text-right">
+                <button type="button" class="btn btn-light" (click)="findWinner()">Find winner</button>
+              </div>
+
+              <div *ngIf="startDay  || startDay1 || startDay2 ||startDay3 "> The winners are:
+                <!-- <div *ngIf="startDay && endDay"> {{startDay}} - {{endDay}} </div>
+                <div *ngIf="startDay1 && endDay1"> {{startDay1}} - {{endDay1}} </div>
+                <div *ngIf="startDay2 && endDay2"> {{startDay2}} - {{endDay2}} </div>
+                <div *ngIf="startDay3 && endDay3"> {{startDay3}} - {{endDay3}} </div> -->
+                <div class="row">
+                  <div class="col-md-5 ">
+                    <table>
+                      <thead>
+                        <td></td>
+                        <td></td>
+                      </thead>
+                      <br>
+                      <tbody>
+                        <tr *ngIf="startDay && endDay">
+                          <td>
+                            <input type="radio" name="radiogroup" [value]="startDay"
+                              (change)="onSelectionChange1(startDay, endDay)">
+                          </td>
+                          <td>{{startDay}} - {{endDay}}</td>
+                        </tr>
+                        <tr *ngIf="startDay1 && endDay1">
+                          <td>
+                            <input type="radio" name="radiogroup" [value]="startDay1"
+                              (change)="onSelectionChange1(startDay1, endDay1)">
+                          </td>
+                          <td>{{startDay1}} - {{endDay1}}</td>
+                        </tr>
+                        <tr *ngIf="startDay2 && endDay2">
+                          <td>
+                            <input type="radio" name="radiogroup" [value]="startDay2"
+                              (change)="onSelectionChange1(startDay2, endDay2)">
+                          </td>
+                          <td>{{startDay2}} - {{endDay2}}</td>
+                        </tr>
+                        <tr *ngIf="startDay3 && endDay3">
+                          <td>
+                            <input type="radio" name="radiogroup" [value]="startDay3"
+                              (change)="onSelectionChange1(startDay3, endDay3)">
+                          </td>
+                          <td>{{startDay3}} - {{endDay3}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+
+
+                  </div>
+                </div>
+                <br>
+                <br>
+                <div class="row">
+                  <div class="text-right col-md-auto">
+                    <button type="button" class="btn btn-light" (click)="updateInterval()">Pick choice</button>
+
+                  </div>
+                  <div class="text-right col-md-auto">
+                    <button type="button" class="btn btn-light" (click)="onRetakePoll()">Retake poll </button>
+
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+
+
+          </div>
+
+
+          <div class="row retakeVotes" *ngIf="retaken2=='da'">
+            <h4 class="textRetake"> Due to multiple possibilities for the trip dates, you have to RETAKE the poll.</h4>
+            <br>
+            <br>
+            <br>
+            <br>
+            <div class="col-md-5 ">
+              <table>
+                <thead>
+                  <td></td>
+                  <td>
+                    <h5>Vote one of the final choices</h5>
+                  </td>
+                </thead>
+                <br>
+                <tbody>
+                  <tr *ngFor="let choice of choicesRetake">
+                    <td>
+                      <input type="radio" name="radiogroup" [value]="choice.id"
+                        (change)="onSelectionChangeRetake(choice)">
+                    </td>
+                    <td>{{ choice.text }}</td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="text-right">
+                <button type="button" class="btn btn-light" (click)="onVoteRetake()">Vote
+                  choice</button>
+              </div>
+              <br>
+              <div class="voteUser" *ngIf="personalVoteRetaken">Your vote is: {{personalVoteRetaken.choice.text}}</div>
+            </div>
+
+            <div class="col-md-5 votesPoll" *ngIf="user1=='admin-poll'">
+
+              <h4>Votes in this poll</h4>
+              <table id="table1" class="table table-bordered table-striped table-sm fundal">
+                <colgroup>
+                  <col span="1">
+                  <!-- <col span="1"> -->
+                  <col span="1" style=" text-align: center;">
+                </colgroup>
+                <thead>
+                  <tr role="row">
+                    <th>User</th>
+                    <th>Choice</th>
+                    <th>Status</th>
+
+
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let vote of votesRetaken ">
+                    <td *ngIf="vote.user.userName">{{ vote.user.userName }}</td>
+                    <td *ngIf="!vote.user.userName">Null</td>
+                    <td *ngIf="vote.choice.text">{{ vote.choice.text }}</td>
+                    <td *ngIf="!vote.choice.text">No choice</td>
+                    <td *ngIf="vote.status">{{ vote.status }}</td>
+                    <td *ngIf="!vote.status">Null</td>
+
+                  </tr>
+                </tbody>
+              </table>
+              <div class="text-right">
+                <button type="button" class="btn btn-light" (click)="findWinnerRetake()">Find winner</button>
+              </div>
+              <div *ngIf="winner2"> The winner is: {{winner2}} </div>
+              <br>
+              <div class="text-right">
+                <button type="button" class="btn btn-light" (click)="updateIntervalRetake()">Pick this winner</button>
+              </div>
+
+
+            </div>
+          </div>
+
+
+          <div class="row justify-content-end">
+            <div class="col-sm-5 col-md-auto ">
+              <div class="col-md-auto">
+                <button [routerLink]="[nextUrl]" type="button" class="btn btn-block btn-light">Pick Location </button>
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+
+
+
+
+    </div>

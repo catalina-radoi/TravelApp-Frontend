@@ -1,0 +1,50 @@
+<div class="modal-header ">
+  <h4 class="modal-title pull-left" *ngIf="!selectedGroup.groupId">Add Group</h4>
+  <h4 class="modal-title pull-left" *ngIf="selectedGroup.groupId">Details Group</h4>
+  <button type="button" class="close pull-right" aria-label="Close" (click)="onCancel()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+<div class="modal-body">
+  <div class="container">
+    <div [hidden]="submitted">
+      <form (ngSubmit)="onSave()" id="ngForm" #groupForm="ngForm">
+        <div class="row">
+
+          <div class="col-md-6">
+            <label for="table">Members</label>
+            <div class="members-selection-container">
+              <table class="table table-bordered table-striped table-sm tablescroll " id="table">
+                <colgroup>
+                  <col span="1">
+                </colgroup>
+                <thead>
+                  <tr role="row">
+                    <th>Members</th>
+                  </tr>
+                </thead>
+                <tbody class="tabelmembers">
+
+                  <tr *ngFor="let member of members">
+                    <td>{{ member.userName}}</td>
+                  </tr>
+
+                </tbody>
+              </table>
+            </div>
+
+          </div>
+
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal-footer">
+  <button type="button" class="btn btn-danger" (click)="onCancel()">
+    Cancel
+  </button>
+
+</div>

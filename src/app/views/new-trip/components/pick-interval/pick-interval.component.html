@@ -1,0 +1,100 @@
+<!-- <p>pick-interval works!</p> -->
+
+<div class="container">
+  <div class="card">
+    <div class="card-header">
+      <strong>Pick Interval</strong>
+    </div>
+    <div class="card-body">
+      <form #f="ngForm" (ngSubmit)="onSubmit(f)" class="form-horizontal">
+        <div class="form-group row">
+          <label class="col-md-3 col-form-label">From:</label>
+          <div class="col-md-9">
+
+            <input class="form-control" type="date" id="start" name="start" placeholder="date" ngModel>
+
+            <span class="help-block">Please enter start date</span>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-md-3 col-form-label">To:</label>
+          <div class="col-md-9">
+            <input class="form-control" type="date" id="end" name="end" placeholder="date" ngModel>
+            <span class="help-block">Please enter end date</span>
+          </div>
+        </div>
+
+        <button> Submit</button>
+        <!-- <app-calendar [startInterval]="f.value.start"></app-calendar> -->
+      </form>
+      <br>
+      <br>
+      <div class="col-md-3">
+        <form (ngSubmit)="onSave()" id="ngForm3" #daysForm="ngForm" *ngIf="pollCurent != 'opened'">
+
+
+          <div class="form-group">
+            <label for="mindays">Minimum days</label>
+            <input type="text" class="form-control" id="mindays" required [(ngModel)]="model.mindays" name="mindays"
+              #mindays="ngModel" />
+            <div [hidden]="mindays.valid || mindays.pristine" class="alert alert-danger">
+              minimum days is required
+            </div>
+          </div>
+          <div class="text-right">
+            <button type="button" class="btn btn-light" (click)="onMinDays(daysForm)">Submit
+            </button>
+          </div>
+
+
+        </form>
+
+      </div>
+      <br>
+      <br>
+      <div class="col-md-5">
+        <form (ngSubmit)="onSave()" id="ngForm2" #pollForm="ngForm" *ngIf="pollCurent != 'opened'">
+
+
+          <div class="form-group">
+            <label for="question">Question for poll</label>
+            <input type="text" class="form-control" id="question" required [(ngModel)]="model.question" name="question"
+              #question="ngModel" />
+            <div [hidden]="question.valid || question.pristine" class="alert alert-danger">
+              question is required
+            </div>
+          </div>
+          <div class="text-right">
+            <button type="button" class="btn btn-light" (click)="onCreate(pollForm)">Create
+              poll</button>
+          </div>
+
+
+        </form>
+        <div *ngIf="pollCurent == 'opened'">
+          <h4>Date poll for current trip is already opened</h4>
+          <br>
+          The interval for the date poll is between
+          <br>
+          {{this.currentTrip.startInterval}} and {{this.currentTrip.endInterval}}
+        </div>
+      </div>
+
+    </div>
+    <!-- <div class="card-footer"> -->
+    <div class="row justify-content-end">
+      <div class="col-sm-5 col-md-auto ">
+        <!-- <div class="col-12 col-xl mb-3 mb-xl-0"> -->
+        <div class="col-md-auto">
+          <button *ngIf="href=='/new-trip/picked-group/pick-interval' " [routerLink]="[nextUrl]" type="button"
+            class="btn btn-block btn-light">To Calendar</button>
+
+        </div>
+        <br>
+
+        <!-- </div> -->
+      </div>
+    </div>
+  </div>
+
+</div>

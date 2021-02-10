@@ -1,0 +1,375 @@
+<div class="container-fluid">
+  <div class="animated fadeIn">
+    <div class="card">
+      <div class="card-header ">
+        <div class="col-sm-5">
+          <h4 class="card-title mb-0 ">Poll location</h4>
+        </div>
+      </div>
+      <div class="card-body">
+
+
+        <div class="container">
+          <div class="row">
+            <div class="col-md-5">
+              <h3>Poll for the current trip you admin</h3>
+              <form (ngSubmit)="onSave()" id="ngForm2" #pollForm="ngForm" *ngIf="pollCurent != 'opened'">
+
+
+                <div class="form-group">
+                  <label for="question">Question for poll</label>
+                  <input type="text" class="form-control" id="question" required [(ngModel)]="model.question"
+                    name="question" #question="ngModel" />
+                  <div [hidden]="question.valid || question.pristine" class="alert alert-danger">
+                    question is required
+                  </div>
+                </div>
+                <div class="text-right">
+                  <button type="button" class="btn btn-light" (click)="onCreate(pollForm)">Create
+                    poll</button>
+                </div>
+
+
+              </form>
+              <div *ngIf="pollCurent == 'opened'">
+
+                <br>
+                Please insert your choice below or vote an existing choice.
+              </div>
+
+
+
+
+
+              <!-- NU AVEM POLL PENTRU TRIP CURENT CARE SA FIE OPENED SI USERUL E ADMIN POLL -->
+              <div *ngIf="user1=='admin-poll'">
+
+
+                <form (ngSubmit)="onSave()" id="ngForm" #choiceForm="ngForm">
+
+
+
+                  <div class="form-group">
+                    <label for="text">Insert choice</label>
+                    <input type="text" class="form-control" id="text" required [(ngModel)]="modelChoice.text"
+                      name="text" #text="ngModel" />
+                    <div [hidden]="text.valid || text.pristine" class="alert alert-danger">
+                      text is required
+                    </div>
+                  </div>
+                  <div class="text-right">
+                    <button type="button" class="btn btn-light" (click)="onAddChoice(choiceForm)">Add
+                      choice</button>
+                  </div>
+
+
+                </form>
+
+
+                <br>
+
+                <table>
+                  <thead>
+                    <td></td>
+                    <td>
+                      <h5>Vote choice</h5>
+                    </td>
+                  </thead>
+                  <br>
+                  <tbody>
+                    <tr *ngFor="let choice of choices">
+                      <td>
+                        <input type="radio" name="radiogroup" [value]="choice.id" (change)="onSelectionChange(choice)">
+                      </td>
+                      <td>{{ choice.text }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div class="text-right">
+                  <button type="button" class="btn btn-light" (click)="onVote()">Vote
+                    choice</button>
+                </div>
+                <div class="voteUser" *ngIf="personalVote">Your vote is: {{personalVote.choice.text}}
+                </div>
+              </div>
+            </div>
+
+
+            <!-- COLOANA 2 -->
+
+            <div class="col-md-6 votesAdmin" *ngIf="user1=='admin-poll'">
+
+              <h4>Votes in this poll</h4>
+              <table id="table1" class="table table-bordered table-striped table-sm ">
+                <colgroup>
+                  <col span="1">
+                  <!-- <col span="1"> -->
+                  <col span="1" style=" text-align: center;">
+                </colgroup>
+                <thead>
+                  <tr role="row">
+                    <th>User</th>
+                    <th>Choice</th>
+                    <th>Status</th>
+
+
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let vote of votes ">
+                    <td *ngIf="vote.user.userName">{{ vote.user.userName }}</td>
+                    <td *ngIf="!vote.user.userName">Null</td>
+                    <td *ngIf="vote.choice.text">{{ vote.choice.text }}</td>
+                    <td *ngIf="!vote.choice.text">No choice</td>
+                    <td *ngIf="vote.status">{{ vote.status }}</td>
+                    <td *ngIf="!vote.status">Null</td>
+
+                  </tr>
+                </tbody>
+              </table>
+              <div class="text-right">
+                <button type="button" class="btn btn-light" (click)="findWinner()">Find winner</button>
+              </div>
+              <div *ngIf="winner || winner_arr[0]">
+
+
+
+
+                <table>
+                  <thead>
+                    <td></td>
+                    <td>
+                      The winners are:
+                    </td>
+                  </thead>
+                  <br>
+                  <tbody>
+                    <tr *ngIf="winner">
+                      <td>
+                        <input type="radio" name="radiogroup" (change)="onSelectionChange3(winner)">
+                      </td>
+                      <td>{{winner}}</td>
+                    </tr>
+                    <tr *ngIf="winner_arr[0]">
+                      <td>
+                        <input type="radio" name="radiogroup" (change)="onSelectionChange3(winner_arr[0])">
+                      </td>
+                      <td>{{winner_arr[0]}}</td>
+                    </tr>
+                    <tr *ngIf="winner_arr[1]">
+                      <td>
+                        <input type="radio" name="radiogroup" (change)="onSelectionChange3(winner_arr[1])">
+                      </td>
+                      <td>{{winner_arr[1]}}</td>
+                    </tr>
+                    <tr *ngIf="winner_arr[2]">
+                      <td>
+                        <input type="radio" name="radiogroup" (change)="onSelectionChange3(winner_arr[2])">
+                      </td>
+                      <td>{{winner_arr[2]}}</td>
+                    </tr>
+                    <tr *ngIf="winner_arr[3]">
+                      <td>
+                        <input type="radio" name="radiogroup" (change)="onSelectionChange3(winner_arr[3])">
+                      </td>
+                      <td>{{winner_arr[3]}}</td>
+                    </tr>
+                    <tr *ngIf="winner_arr[4]">
+                      <td>
+                        <input type="radio" name="radiogroup" (change)="onSelectionChange3(winner_arr[4])">
+                      </td>
+                      <td>{{winner_arr[4]}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+
+                <br>
+                <br>
+                <div class="row">
+                  <div class="text-right col-md-auto">
+                    <button type="button" class="btn btn-light" (click)=" updateLocation()">Pick choice</button>
+
+                  </div>
+                  <div class="text-right col-md-auto">
+                    <button type="button" class="btn btn-light" (click)="onRetakePoll()">Retake poll </button>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <br>
+          <br>
+
+
+
+
+
+
+
+
+          <div class="row retakeVotes" *ngIf="retaken=='da'">
+            <h4 class="textRetake"> Due to multiple possibilities for the trip location, you have to RETAKE the poll.
+            </h4>
+            <br>
+            <br>
+            <br>
+            <br>
+            <div class="col-md-5 ">
+              <table>
+                <thead>
+                  <td></td>
+                  <td>
+                    <h5>Vote one of the final choices</h5>
+                  </td>
+                </thead>
+                <br>
+                <tbody>
+                  <tr *ngFor="let choice of choicesRetake">
+                    <td>
+                      <input type="radio" name="radiogroup" [value]="choice.id"
+                        (change)="onSelectionChangeRetake(choice)">
+                    </td>
+                    <td>{{ choice.text }}</td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="text-right">
+                <button type="button" class="btn btn-light" (click)="onVoteRetake()">Vote
+                  choice</button>
+              </div>
+              <br>
+              <div class="voteUser" *ngIf="personalVoteRetaken">Your vote is: {{personalVoteRetaken.choice.text}}</div>
+            </div>
+
+            <div class="col-md-6 votesPoll" *ngIf="user1=='admin-poll'">
+
+              <h4>Votes in this poll</h4>
+              <table id="table1" class="table table-bordered table-striped table-sm fundal">
+                <colgroup>
+                  <col span="1">
+                  <!-- <col span="1"> -->
+                  <col span="1" style=" text-align: center;">
+                </colgroup>
+                <thead>
+                  <tr role="row">
+                    <th>User</th>
+                    <th>Choice</th>
+                    <th>Status</th>
+
+
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let vote of votesRetaken ">
+                    <td *ngIf="vote.user.userName">{{ vote.user.userName }}</td>
+                    <td *ngIf="!vote.user.userName">Null</td>
+                    <td *ngIf="vote.choice.text">{{ vote.choice.text }}</td>
+                    <td *ngIf="!vote.choice.text">No choice</td>
+                    <td *ngIf="vote.status">{{ vote.status }}</td>
+                    <td *ngIf="!vote.status">Null</td>
+
+                  </tr>
+                </tbody>
+              </table>
+              <div class="text-right">
+                <button type="button" class="btn btn-light" (click)="findWinnerRetake()">Find winner</button>
+              </div>
+              <div *ngIf="winner2"> The winner is: {{winner2}} </div>
+              <br>
+              <div class="text-right">
+                <button type="button" class="btn btn-light" (click)="updateIntervalRetake()">Pick this winner</button>
+              </div>
+
+
+            </div>
+          </div>
+          <br>
+          <BR>
+
+
+          <!--
+          USER -->
+
+          <!-- <div class="userClass" *ngIf="user2=='user-poll'">
+            <h4>Poll for {{groupsUser[0].groupName}}</h4>
+            <div class="row">
+              <div class="col-md-5">
+                <form (ngSubmit)="onSave()" id="ngForm2" #choiceForm2="ngForm">
+
+
+
+                  <div class="form-group">
+                    <label for="text2">Insert choice</label>
+                    <input type="text" class="form-control" id="text2" required [(ngModel)]="modelChoice.text"
+                      name="text" #text="ngModel" />
+                    <div [hidden]="text.valid || text.pristine" class="alert alert-danger">
+                      text is required
+                    </div>
+                  </div>
+                  <div class="text-right">
+                    <button type="button" class="btn btn-light" (click)="onAddChoice2(choiceForm2)">Add
+                      choice</button>
+                  </div>
+
+
+                </form>
+              </div>
+
+            </div>
+
+            <br>
+            <div class="row">
+              <div class="col-md-5 ">
+                <table>
+                  <thead>
+                    <td></td>
+                    <td>
+                      <h5>Vote choice</h5>
+                    </td>
+                  </thead>
+                  <br>
+                  <tbody>
+                    <tr *ngFor="let choice of choices2">
+                      <td>
+                        <input type="radio" name="radiogroup" [value]="choice.id" (change)="onSelectionChange(choice)">
+                      </td>
+                      <td>{{ choice.text }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div class="text-right">
+                  <button type="button" class="btn btn-light" (click)="onVote2()">Vote
+                    choice</button>
+                </div>
+                <div class="voteUser" *ngIf="personalVote2">Your vote is: {{personalVote2.choice.text}}
+                </div>
+              </div>
+            </div>
+
+
+
+
+
+          </div> -->
+
+
+
+
+        </div>
+
+        <div class="row justify-content-end">
+          <div class="col-md-auto text-right">
+            <button type="button" class="btn btn-block btn-light" (click)="onCreatePollOffer() "
+              [routerLink]="['/new-trip/picked-group/pick-interval/calendar/location/offer']">To Offer</button>
+
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+</div>

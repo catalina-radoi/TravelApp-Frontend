@@ -1,0 +1,13 @@
+<div class="calendar-container m-2 p-2">
+  <div id='calendar' class="app-calendar" *ngIf="calendarOptions.properties.calendarVisible">
+    <full-calendar #calendar defaultView="dayGridMonth" [header]="{
+        left: 'prev,next today',
+        center: 'title',
+        right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+      }" [plugins]="calendarOptions.properties.calendarPlugins" [firstDay]="calendarOptions.properties.firstDay"
+      [weekends]="calendarOptions.properties.calendarWeekends" [events]="calendarEvents"
+      [validRange]="calendarOptions.properties.validRange" [selectable]="calendarOptions.properties.selectable"
+      (dateClick)="handleDateClick($event)" (select)="handleSelect($event)">
+    </full-calendar>
+  </div>
+</div>

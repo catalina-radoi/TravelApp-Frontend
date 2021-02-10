@@ -1,0 +1,24 @@
+.votesPoll{
+
+margin-left: 100px;
+margin-bottom: 100px;
+
+}
+.retakeVotes{
+  padding-top: 50px;
+  padding-bottom: 50px;
+  background-color: rgb(241, 178, 167);
+}
+
+.textRetake{
+
+  padding-left:20px;
+}
+
+.voteUser{
+  color: rgb(9, 185, 103);
+}
+
+.fundal{
+  background-color: rgb(219, 188, 188);
+}

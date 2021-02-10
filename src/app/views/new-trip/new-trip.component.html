@@ -1,0 +1,64 @@
+<div class="container-fluid">
+  <div class="animated fadeIn">
+    <div class="card">
+      <div class="card-header ">
+        <div class="col-sm-5">
+          <h4 class="card-title mb-0 ">New Trip</h4>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="row filter-group">
+
+
+
+          <!-- <div class="col-md-6">
+
+            <form id="ngForm" #profileForm="ngForm" class="col-md-8">
+              Let's start a new trip!
+
+              <div class="form-group space">
+                <label class="control-label font-weight-bold">Pick a name for the trip:</label>
+                <input type="email" class="form-control m-0" id="userName" [(ngModel)]="user.username" name="userName"
+                  required />
+              </div>
+              <div class="text-right">
+                <button type="submit" class="btn btn-success " (click)="onSubmit(profileForm)">
+                  Save
+                </button>
+              </div>
+            </form>
+          </div> -->
+          <div class="col-md-6">
+
+
+            Steps in planning a new trip:
+            <ul>
+              <li>Pick a group</li>
+              <li>Choose an interval for voting</li>
+              <li>Pick a start date and an end date</li>
+              <li>Insert location options</li>
+              <li>Vote for a location</li>
+              <li>Final Offer</li>
+            </ul>
+
+            Let's start a new trip!
+
+          </div>
+        </div>
+        <div class="row justify-content-end">
+          <div class="col-md-auto text-right">
+            <button [routerLink]="['/new-trip/picked-group']" type="button" class="btn btn-block btn-light"
+              (click)="onCreate()">Pick
+              Group</button>
+          </div>
+
+
+        </div>
+      </div>
+
+
+
+
+    </div>
+  </div>
+</div>

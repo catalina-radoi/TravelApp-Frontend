@@ -1,0 +1,17 @@
+.members-selection-container {
+  overflow: auto;
+  max-height: 200px;
+  margin-top:3px;
+  margin-bottom:3px;
+}
+
+.members-selection-container > table tr {
+  cursor: pointer;
+}
+.members-selection-container > table tr:hover {
+  background-color: lightgray;
+}
+
+.tabelmembers{
+  height:50px;
+}

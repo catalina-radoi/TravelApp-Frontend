@@ -1,0 +1,247 @@
+<div class="container-fluid">
+  <div class="animated fadeIn">
+    <div class="card">
+      <div class="card-header ">
+        <div class="col-sm-5">
+          <h4 class="card-title mb-0 ">All Trips</h4>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="row filter-group ">
+          <div class="col-md-6">
+            <div class="row">
+              <div class="search-group-1">
+                <i class="fa fa-search"></i>
+              </div>
+              <div class="search-group-2">
+                <input id="search" type="text" class="col-md-12 " [(ngModel)]="tripsFilter.groupTrip"
+                  [ngModelOptions]="{standalone: true}" placeholder="Search trip">
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="row content-margin group-selection-container ">
+          <h5>Trips for group you are a member of</h5>
+          <table class="table table-bordered table-striped table-sm ">
+            <colgroup>
+              <col span="1">
+              <col span="1">
+              <col span="1">
+              <col span="1">
+              <col span="1">
+              <col span="1" style="text-align: center;">
+            </colgroup>
+            <thead>
+              <tr role="row">
+                <th>Group Name</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Status</th>
+                <th>Admin Trip</th>
+                <th>Location</th>
+                <th>Hotel Name</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let trip of tripsUsers | filterBy:tripsFilter2">
+                <td *ngIf="trip.groupTrip">{{ trip.groupTrip.groupName }}</td>
+                <td *ngIf="!trip.groupTrip">No group</td>
+                <td *ngIf="trip.startDate">{{ trip.startDate }}</td>
+                <td *ngIf="!trip.startDate">No date yet</td>
+                <td *ngIf="trip.endDate">{{ trip.endDate }}</td>
+                <td *ngIf="!trip.endDate">No date yet</td>
+                <td>{{ trip.status }}</td>
+                <td *ngIf="trip.adminTrip">{{ trip.adminTrip.userName }}</td>
+                <td *ngIf="!trip.adminTrip">No admin</td>
+                <td *ngIf="trip.location">{{ trip.location }}</td>
+                <td *ngIf="!trip.location">No location yet</td>
+                <td *ngIf="trip.offerTrip">{{ trip.offerTrip.hotelName }}</td>
+                <td *ngIf="!trip.offerTrip">No hotel</td>
+
+                <td class="action-column" *ngIf="trip.status=='closed'">
+
+                  <button type="button" class="btn btn-info color-text-btn btn-dim" (click)="onChange(trip)">
+                    View Details
+                  </button>
+                </td>
+                <td class="action-column" *ngIf="trip.status=='opened'">
+                  <button *ngIf="trip.step=='picked-group'" type="button" class="btn btn-info color-text-btn btn-dim"
+                    [routerLink]="['/new-trip/picked-group']">
+                    View Progress
+                  </button>
+                  <button *ngIf="trip.step=='interval'" type="button" class="btn btn-info color-text-btn btn-dim"
+                    [routerLink]="['/new-trip/picked-group/pick-interval']">
+                    View Progress
+                  </button>
+                  <button *ngIf="trip.step=='calendar'" type="button" class="btn btn-info color-text-btn btn-dim"
+                    (click)="onVoteCalendar(trip)">
+                    View Progress
+                  </button>
+                  <!-- [routerLink]="['/new-trip/picked-group/pick-interval/calendar/location']"  -->
+                  <button *ngIf="trip.step=='location'" type="button" class="btn btn-info color-text-btn btn-dim"
+                    (click)="onPickLocation(trip)">
+                    View Progress
+                  </button>
+                  <button *ngIf="trip.step=='offer'" type="button" class="btn btn-info color-text-btn btn-dim"
+                    (click)="onVoteOffer(trip)">
+                    View Progress
+                  </button>
+                </td>
+
+
+              </tr>
+            </tbody>
+          </table>
+
+        </div>
+        <div class="row content-margin group-selection-container ">
+          <!-- <div class="col-md-12"> -->
+          <h5>Administration</h5>
+          <!-- </div> -->
+          <br>
+
+          <div class="col-md-12" *ngIf="tripsAdmin.length==0"> No trips in administration</div>
+          <table *ngIf="tripsAdmin.length!=0" class="table table-bordered table-striped table-sm ">
+            <colgroup>
+              <col span="1">
+              <col span="1">
+              <col span="1">
+              <col span="1">
+              <col span="1">
+              <col span="1" style="text-align: center;">
+            </colgroup>
+            <thead>
+              <tr role="row">
+                <th>Group Name</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Status</th>
+                <th>Admin Trip</th>
+                <th>Location</th>
+                <th>Hotel Name</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let trip of tripsAdmin | filterBy:tripsFilter">
+                <td *ngIf="trip.groupTrip">{{ trip.groupTrip.groupName }}</td>
+                <td *ngIf="!trip.groupTrip">No group</td>
+                <td *ngIf="trip.startDate">{{ trip.startDate }}</td>
+                <td *ngIf="!trip.startDate">No date yet</td>
+                <td *ngIf="trip.endDate">{{ trip.endDate }}</td>
+                <td *ngIf="!trip.endDate">No date yet</td>
+                <td>{{ trip.status }}</td>
+                <td *ngIf="trip.adminTrip">{{ trip.adminTrip.userName }}</td>
+                <td *ngIf="!trip.adminTrip">No admin</td>
+                <td *ngIf="trip.location">{{ trip.location }}</td>
+                <td *ngIf="!trip.location">No location yet</td>
+                <td *ngIf="trip.offerTrip">{{ trip.offerTrip.hotelName }}</td>
+                <td *ngIf="!trip.offerTrip">No hotel</td>
+
+                <td class="action-column" *ngIf="trip.status=='closed'">
+
+                  <button type="button" class="btn btn-info color-text-btn btn-dim" (click)="onChange(trip)">
+                    View Details
+                  </button>
+                </td>
+                <td class="action-column" *ngIf="trip.status=='opened'">
+                  <button *ngIf="trip.step=='picked-group'" type="button" class="btn btn-info color-text-btn btn-dim"
+                    [routerLink]="['/new-trip/picked-group']">
+                    View Progress
+                  </button>
+                  <button *ngIf="trip.step=='interval'" type="button" class="btn btn-info color-text-btn btn-dim"
+                    [routerLink]="['/new-trip/picked-group/pick-interval']">
+                    View Progress
+                  </button>
+                  <button *ngIf="trip.step=='calendar'" type="button" class="btn btn-info color-text-btn btn-dim"
+                    [routerLink]="['/new-trip/picked-group/pick-interval/calendar']">
+                    View Progress
+                  </button>
+                  <button *ngIf="trip.step=='location'" type="button" class="btn btn-info color-text-btn btn-dim"
+                    [routerLink]="['/new-trip/picked-group/pick-interval/calendar/location']">
+                    View Progress
+                  </button>
+                  <button *ngIf="trip.step=='offer'" type="button" class="btn btn-info color-text-btn btn-dim"
+                    [routerLink]="['/new-trip/picked-group/pick-interval/calendar/location/offer']">
+                    View Progress
+                  </button>
+                </td>
+
+
+              </tr>
+            </tbody>
+          </table>
+
+        </div>
+
+        <!-- <table class="table table-bordered table-striped table-sm ">
+          <colgroup>
+            <col span="1">
+            <col span="1">
+            <col span="1">
+            <col span="1">
+            <col span="1">
+            <col span="1" style="text-align: center;">
+          </colgroup>
+          <thead>
+            <tr role="row">
+              <th>Group Name</th>
+              <th>Start Date</th>
+              <th>End Date</th>
+              <th>Status</th>
+              <th>Admin Trip</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let trip2 of tripsAdmin | filterBy:tripsFilter">
+              <td>{{ trip2.groupTrip.groupName }}</td>
+              <td>{{ trip2.startDate }}</td>
+              <td>{{ trip2.endDate }}</td>
+              <td>{{ trip2.status }}</td>
+              <td>{{ trip2.adminTrip.userName }}</td>
+
+              <td class="action-column" *ngIf="trip2.status=='closed'">
+
+                <button type="button" class="btn btn-info color-text-btn btn-dim" (click)="onChange(trip2)">
+                  View Details
+                </button>
+              </td>
+              <td class="action-column" *ngIf="trip2.status=='opened'">
+                <button *ngIf="trip2.step=='groupName'" type="button" class="btn btn-info color-text-btn btn-dim"
+                  [routerLink]="['/new-trip/picked-group']">
+                  View Progress
+                </button>
+                <button *ngIf="trip2.step=='interval'" type="button" class="btn btn-info color-text-btn btn-dim"
+                  [routerLink]="['/new-trip/picked-group/pick-interval']">
+                  View Progress
+                </button>
+                <button *ngIf="trip2.step=='calendar'" type="button" class="btn btn-info color-text-btn btn-dim"
+                  [routerLink]="['/new-trip/picked-group/pick-interval/calendar']">
+                  View Progress
+                </button>
+                <button *ngIf="trip2.step=='location'" type="button" class="btn btn-info color-text-btn btn-dim"
+                  [routerLink]="['/new-trip/picked-group/pick-interval/calendar/location']">
+                  View Progress
+                </button>
+                <button *ngIf="trip2.step=='offer'" type="button" class="btn btn-info color-text-btn btn-dim"
+                  [routerLink]="['/new-trip/picked-group/pick-interval/calendar/location/offer']">
+                  View Progress
+                </button>
+              </td>
+
+
+            </tr>
+          </tbody>
+        </table> -->
+        <!-- <div class="row content-margin">
+
+          </div> -->
+      </div>
+
+
+    </div>
+  </div>
+</div>

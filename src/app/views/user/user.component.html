@@ -1,0 +1,133 @@
+<div class="container-fluid">
+  <div class="animated fadeIn">
+    <div class="card ">
+      <div class="card-header ">
+        <div class="col-sm-5">
+          <h4 class="card-title mb-0 ">User</h4>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <form id="ngForm" #profileForm="ngForm" class="col-md-6">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="control-label font-weight-bold">Username:</label>
+                  <input type="text" class="form-control m-0" id="userName" [(ngModel)]="user.userName" name="userName"
+                    required />
+                </div>
+                <div class="form-group">
+                  <label class="control-label font-weight-bold">Firstname:</label>
+                  <input type="text" class="form-control m-0" id="firstName" [(ngModel)]="user.firstName"
+                    name="firstName" />
+                </div>
+                <div class="form-group">
+                  <label class="control-label font-weight-bold">Lastname:</label>
+                  <input type="text" class="form-control m-0" id="lastName" [(ngModel)]="user.lastName"
+                    name="lastName" />
+                </div>
+                <div class="form-group">
+                  <label class=" control-label font-weight-bold">E-mail:</label>
+                  <input type="text" class="form-control  m-0" id="emailId" [(ngModel)]="user.emailId" name="emailId" />
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="text-center">
+                  <img src="../../../assets/img/avatars/profile.png" class="rounded" style="width: 100px">
+                </div>
+                <!-- <div class="form-group">
+                  <label for="exampleFormControlFile1">Image</label>
+                  <input type="file" class="form-control-file m-0" (change)="onFileChanged($event)"
+                    id="exampleFormControlFile1">
+                </div> -->
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 offset-md-6 text-right">
+                <button type="button" class="btn btn-danger">
+                  Cancel
+                </button>
+                <button type="submit" class="btn btn-success" (click)="onSubmit(profileForm)">
+                  Save
+                </button>
+              </div>
+            </div>
+            <div class="row">
+              <form id="ngForm2" #changePassForm="ngForm" class="col-md-12">
+                <!-- <button class="btn btn-light" (click)="toggle()" id="bt">
+                  Change Password
+                </button> -->
+                <ng-container *ngIf="show">
+                  <fieldset>
+                    <!-- <legend>Change Password</legend> -->
+                    <div class="row mx-auto">
+                      <div class="col-md-6">
+                        <div class="field">
+                          <label for="newpass">New Password:</label>
+                          <input required minlength="10" type="password" class="form-control m-0" id="newpass"
+                            name="password1" ngModel #password1="ngModel" />
+                          <div *ngIf="password1.invalid && (password1.dirty || password1.touched)"
+                            class="alert alert-danger">
+                            <div *ngIf="password1.errors.required">
+                              Password is required.
+                            </div>
+                            <div *ngIf="password1.errors.minlength">
+                              Password must be at least 10 characters long.
+                            </div>
+                          </div>
+                        </div>
+                        <div class="field">
+                          <label for="confirmpass">Confirm Password:</label>
+                          <input required minlength="10" type="password" class="form-control m-0" name="password2"
+                            id="confirmpass" ngModel #password2="ngModel" />
+                          <div *ngIf="password2.invalid && (password2.dirty || password2.touched)"
+                            class="alert alert-danger">
+                            <div *ngIf="password2.errors.required">
+                              Password is required.
+                            </div>
+                            <div *ngIf="password2.errors.minlength">
+                              Password must be at least 10 characters long.
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="field">
+                          <label for="tb">Old Password:</label>
+                          <input type="password" class="form-control m-0 " id="tb" name="password3" ngModel
+                            #password3="ngModel" required minlength="10" />
+                          <div *ngIf="password3.invalid && (password3.dirty || password3.touched)"
+                            class="alert alert-danger">
+                            <div *ngIf="password3.errors.required">
+                              Password is required.
+                            </div>
+                            <div *ngIf="password3.errors.minlength">
+                              Password must be at least 10 characters long.
+                            </div>
+                          </div>
+                        </div>
+                        <!-- <br> TODO: add css styling -->
+                        <div class="text-right">
+                          <!-- <button class=" btn btn-change" (click)="onSubmit2(changePassForm)">
+                            Change
+                          </button> -->
+                        </div>
+                      </div>
+                    </div>
+                  </fieldset>
+                </ng-container>
+              </form>
+            </div>
+          </form>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="col-md-3 control-label font-weight-bold">New trip:</label>
+              <div class="col-md-8 ">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
